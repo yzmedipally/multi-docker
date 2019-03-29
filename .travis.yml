@@ -9,13 +9,14 @@ script:
   - docker run yzmedipally/react-test npm run test -- --coverage
 
 after_success:
-  - docker run yzmedipally/multi-client ./client
-  - docker run yzmedipally/multi-nginx ./nginx
-  - docker run yzmedipally/multi-server ./server
-  - docker run yzmedipally/multi-worker ./worker
+  - docker run -t yzmedipally/multi-client ./client
+  - docker run -t yzmedipally/multi-nginx ./nginx
+  - docker run -t yzmedipally/multi-server ./server
+  - docker run -t yzmedipally/multi-worker ./worker
 
   # Login to Docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  
   # Take these images and push into docker hub
   - docker push yzmedipally/multi-client
   - docker push yzmedipally/multi-nginx
