@@ -15,8 +15,8 @@ after_success:
   - docker build -t yzmedipally/multi-worker ./worker
 
   # Login to Docker CLI
-  #- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  - docker login -u "$DOCKER_ID" -p "DOCKER_PASSWORD"
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  #- docker login -u "$DOCKER_ID" -p "DOCKER_PASSWORD"
   # Take these images and push into docker hub
   - docker push yzmedipally/multi-client
   - docker push yzmedipally/multi-nginx
