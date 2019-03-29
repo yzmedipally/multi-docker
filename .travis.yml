@@ -1,0 +1,23 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t yzmedipally/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run yzmedipally/react-test npm run test -- --coverage
+
+after_success:
+  - docker run yzmedipally/multi-client ./client
+  - docker run yzmedipally/multi-nginx ./nginx
+  - docker run yzmedipally/multi-server ./server
+  - docker run yzmedipally/multi-worker ./worker
+
+  # Login to Docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take these images and push into docker hub
+  - docker push yzmedipally/multi-client
+  - docker push yzmedipally/multi-nginx
+  - docker push yzmedipally/multi-server
+  - docker push yzmedipally/multi-worker
