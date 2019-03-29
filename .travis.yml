@@ -9,10 +9,10 @@ script:
   - docker run yzmedipally/react-test npm run test -- --coverage
 
 after_success:
-  - docker run -t yzmedipally/multi-client ./client
-  - docker run -t yzmedipally/multi-nginx ./nginx
-  - docker run -t yzmedipally/multi-server ./server
-  - docker run -t yzmedipally/multi-worker ./worker
+  - docker build -t yzmedipally/multi-client ./client
+  - docker build -t yzmedipally/multi-nginx ./nginx
+  - docker build -t yzmedipally/multi-server ./server
+  - docker build -t yzmedipally/multi-worker ./worker
 
   # Login to Docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
